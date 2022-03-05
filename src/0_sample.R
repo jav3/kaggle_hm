@@ -40,4 +40,5 @@ fwrite(cust_indices_samp, "data/sample/customer_indices.csv")
 fwrite(trans_samp, "data/sample/trans_samp.csv")
 fwrite(customers_samp, "data/sample/customers_samp.csv")
 fwrite(pc_indices_samp, "data/sample/pc_indices_samp.csv")
+fwrite(articles, "data/sample/articles.csv")
 
