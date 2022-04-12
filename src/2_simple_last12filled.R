@@ -1,6 +1,7 @@
 library(data.table)
 library(dplyr)
 library(lubridate)
+library(arrow)
 
 # Read data ---------------------------------------------------------------
 
@@ -8,7 +9,7 @@ setwd("~/Downloads/Kaggle/hm")
 
 articles = fread("data/articles.csv")
 customers = fread("data/customers.csv")
-trans = fread("data/transactions_train.csv")
+trans = arrow::open_dataset("data/transactions.arrow", format = "arrow") %>% collect %>% setDT # fread("data/transactions_train.csv")
 
 # Latest date
 max(trans$t_dat) # 2020-09-22
@@ -23,7 +24,7 @@ length(unique(customers$customer_id)) # 1371980
 
 setkey(trans, customer_id)
 trans = trans[order(customer_id, -t_dat)]
-trans[, article_id := paste0("0", article_id)]
+#trans[, article_id := paste0("0", article_id)]
 
 # Get hottest articles
 hottest_articles = trans[t_dat >= max(trans$t_dat) %m-% weeks(1)]
