@@ -22,6 +22,15 @@ function precision_at_k(y_true, y_pred, k = 12)::Float16
     return (length(collect(skipmissing(common)))/k)
 end
 
+function recall_at_k(y_true, y_pred, k = 12)::Float16
+    if (length(y_true) == 0)
+        return (0)
+    end
+
+    common = intersect(y_true, y_pred[1:k])
+    return (length(collect(skipmissing(common)))/length(y_true))
+end
+
 function rel_at_k(y_true, y_pred, k = 12)::Float16
     if y_pred[k] === missing 
         return 0
